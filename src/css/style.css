@@ -1,0 +1,19 @@
+@font-face {
+  font-family: 'Font1';
+  src: url('fonts/cantarell-bold-webfont.woff2') format(woff2),
+    url('fonts/cantarell-bold-webfont.woff') format(woff),
+    url('fonts/cantarell-regular-webfont.woff2') format(woff2),
+    url('fonts/cantarell-regular-webfont.woff') format(woff);
+}
+
+body {
+  font-family: 'Font1', Arial, Helvetica, sans-serif;
+}
+
+.hello {
+    color: red;
+  }
+
+  .bold {
+    font-weight: bold;
+  }
