@@ -4,31 +4,29 @@ const path = require('path');
 const webpack = require('webpack');
 
 // Constants
+const PATH_PUBLIC = path.resolve(__dirname, 'public');
 const PATH_SRC_CSS = path.resolve(__dirname, 'src/css/');
 const PATH_SRC_HTML_HOME  = 
   path.resolve(__dirname, 'src/html/home/index.html');
 const PATH_SRC_COMPONENTS = 
   path.resolve(__dirname, 'src/components');
-const OUTPUT_FOLDER_NAME = 'public';
-const OUTPUT_PATH_ROOT = path.resolve(__dirname, OUTPUT_FOLDER_NAME);
 
 module.exports = {
   mode: 'development',
-  entry: {
-    app: './src/index.js',
-  },
-  devServer: {
-    contentBase: OUTPUT_PATH_ROOT,
-    disableHostCheck: true,
-  },
-  devtool: 'source-map',
+  entry: './src/index.js',
   output: {
     filename: 'bundle.js',
-    path: OUTPUT_PATH_ROOT,
+    path: PATH_PUBLIC,
   },
+  devServer: {
+    contentBase: PATH_PUBLIC,
+    disableHostCheck: true,
+    hot: true,
+  },
+  devtool: 'source-map',
   plugins: [
     new HtmlWebpackPlugin({template: PATH_SRC_HTML_HOME}),
-    new CleanWebpackPlugin([OUTPUT_PATH_ROOT]),
+    new CleanWebpackPlugin([PATH_PUBLIC]),
     new webpack.HotModuleReplacementPlugin(),
   ],
   resolve: {
@@ -43,10 +41,11 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        use: ['babel-loader', 'react-hot-loader'],
+        use: ['babel-loader'],
       },
       {
         test: /\.css$/,
+        exclude: /node_modules/,
         use: [
           'style-loader',
           'css-loader',
@@ -54,6 +53,7 @@ module.exports = {
       },
       {
         test: /\.(woff|woff2)$/,
+        exclude: /node_modules/,
         use: 'file-loader'
       }
     ]
