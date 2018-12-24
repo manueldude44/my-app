@@ -1,5 +1,7 @@
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+var HtmlWebpackIncludeAssetsPlugin = 
+  require('html-webpack-include-assets-plugin');
 const path = require('path');
 const webpack = require('webpack');
 
@@ -12,13 +14,14 @@ const PATH_SRC_COMPONENTS =
   path.resolve(__dirname, 'src/components');
 
 module.exports = {
-  mode: 'development',
+  mode: "development",
   entry: './src/index.js',
   output: {
     filename: 'bundle.js',
     path: PATH_PUBLIC,
   },
   devServer: {
+    noInfo: true,
     contentBase: PATH_PUBLIC,
     disableHostCheck: true,
     hot: true,
@@ -26,14 +29,12 @@ module.exports = {
   devtool: 'source-map',
   plugins: [
     new HtmlWebpackPlugin({template: PATH_SRC_HTML_HOME}),
+    // new HtmlWebpackIncludeAssetsPlugin({assets: [], append: true})
     new CleanWebpackPlugin([PATH_PUBLIC]),
     new webpack.HotModuleReplacementPlugin(),
   ],
   resolve: {
-    alias: {
-      css: PATH_SRC_CSS,
-      components: PATH_SRC_COMPONENTS,
-    },
+    modules: ['src', 'node_modules'],
     extensions: ['.js', '.css']
   },
   module: {
